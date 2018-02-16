@@ -2,15 +2,13 @@
 from peewee import *
 
 ## set up models / task 3
-db = SqliteDatabase('data.db')
+schools_db = SqliteDatabase('data.db')
 
-class BaseModel(Model):
-    class Meta:
-        database = db
-
-class School(BaseModel):
+class School(Model):
 	class Meta:
+		database = schools_db
 		table_name = 'schools'		
+		
 
 	dbn = CharField(unique=True, null=False, primary_key=True)
 	school_name = CharField(null=False)
@@ -38,3 +36,19 @@ schoolsWithMoreThan50Students = School.select().where(School.number_of_test_take
 print("(4,4) The first 5 schools that have more than 50 students are sorted descendingly by mathematics score mean: ")
 for school in schoolsWithMoreThan50Students:
 	print("\t - " + school.school_name + " | " + str(school.mathematics_mean))
+
+#------------
+## task 5
+#------------
+### Part 1
+students_db = SqliteDatabase('student.db')
+### Part 2
+class Student(Model):
+	class Meta:
+		database = students_db
+		table_name = 'student'
+
+	username = CharField(unique = True, null = False, primary_key = True, max_length = 255)
+	score = IntegerField(null = False)
+
+
