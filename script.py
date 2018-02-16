@@ -73,3 +73,14 @@ def highestStudent():
 	return Student.select().order_by(Student.score.desc())[0]
 print("(6,2) The highest student is " + highestStudent().username + ", with a score of " + str(highestStudent().score) + ".")
 
+#------------
+## task 7
+#------------
+def deleteLowestStudent():
+	Student.select().order_by(Student.score)[0].delete_instance()
+# test this
+deleteLowestStudent()
+print("(7) After deleting the lowest score, the remaining students are: ")
+print("| username | score |")
+for student in Student.select():
+	print("| " + student.username + " | " + str(student.score) + " |")
