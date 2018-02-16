@@ -50,5 +50,26 @@ class Student(Model):
 
 	username = CharField(unique = True, null = False, primary_key = True, max_length = 255)
 	score = IntegerField(null = False)
+students_db.create_tables([Student], safe = True)
 
+#------------
+## task 6
+#------------
+### Part 1: students here is a list of student dictionaries: {"username", "score"}
+def add_students(students):
+	Student.insert_many(students).execute()
+# create some students
+students = [{'username': 'devdude', 'score': 42}, {'username': 'notdevdude', 'score': 23}, {'username': 'someguy', 'score': 67}]
+Student.delete().execute()
+add_students(students)
+# print all students
+print("(6,1) The created students are: ")
+print("| username | score |")
+for student in Student.select():
+	print("| " + student.username + " | " + str(student.score) + " |")
+
+### Part 2
+def highestStudent():
+	return Student.select().order_by(Student.score.desc())[0]
+print("(6,2) The highest student is " + highestStudent().username + ", with a score of " + str(highestStudent().score) + ".")
 
